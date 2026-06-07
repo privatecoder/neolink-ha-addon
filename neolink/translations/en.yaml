@@ -23,5 +23,3 @@ configuration:
   cameras:
     name: Cameras
     description: One entry per camera. Use uid (P2P) or address (ip:9000).
-network:
-  8554/tcp: RTSP server

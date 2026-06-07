@@ -55,7 +55,7 @@ printf '%s' "$effective" | /usr/bin/neolink-gen-config > "$CONFIG"
 
 if [ "$level" = "debug" ] || [ "$level" = "trace" ]; then
   bashio::log.info "Generated neolink.toml (passwords redacted):"
-  sed -E 's/(password|pass|credentials)[^=]*=.*/\1 = <redacted>/I' "$CONFIG" | bashio::log.info
+  bashio::log.info "$(sed -E 's/(password|pass|credentials)[^=]*=.*/\1 = <redacted>/I' "$CONFIG")"
 fi
 
 # Mode: mqtt-rtsp if we wrote an [mqtt] block, else rtsp.

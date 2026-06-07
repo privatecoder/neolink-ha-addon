@@ -22,11 +22,7 @@ options:
     enabled: true
     discovery: true
     discovery_topic: homeassistant
-  cameras:
-    - name: Camera01
-      username: admin
-      password: ""
-      uid: ""
+  cameras: []
 schema:
   log_level: list(trace|debug|info|warn|error)
   bind: str
