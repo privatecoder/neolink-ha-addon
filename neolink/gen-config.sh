@@ -18,3 +18,13 @@ cert="$(jqr '.certificate // empty')"
 [ -n "$cert" ] && printf 'certificate = %s\n' "$(tomlstr "$cert")"
 tca="$(jqr '.tls_client_auth // empty')"
 [ -n "$tca" ] && printf 'tls_client_auth = %s\n' "$(tomlstr "$tca")"
+
+# --- RTSP users ---
+n_users="$(jqr '(.rtsp_users // []) | length')"
+for ((i=0; i<n_users; i++)); do
+  uname="$(jqr ".rtsp_users[$i].name")"
+  upass="$(jqr ".rtsp_users[$i].pass // \"\"")"
+  printf '\n[[users]]\n'
+  printf 'name = %s\n' "$(tomlstr "$uname")"
+  printf 'pass = %s\n' "$(tomlstr "$upass")"
+done
