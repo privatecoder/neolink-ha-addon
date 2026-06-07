@@ -115,4 +115,17 @@ for ((i=0; i<n_cams; i++)); do
     printf 'topic = %s\n' "$(tomlstr "$(jqr '.mqtt_resolved.discovery_topic // "homeassistant"')")"
     printf 'features = %s\n' "$feats"
   fi
+
+  # [cameras.pause]
+  p_motion="$(aj 'pause_on_motion')"
+  p_disc="$(aj 'pause_on_disconnect')"
+  p_to="$(aj 'pause_motion_timeout')"
+  p_mode="$(aj 'pause_mode')"
+  if [ -n "$p_motion$p_disc$p_to$p_mode" ]; then
+    printf '\n[cameras.pause]\n'
+    [ -n "$p_motion" ] && printf 'on_motion = %s\n' "$p_motion"
+    [ -n "$p_disc" ]   && printf 'on_disconnect = %s\n' "$p_disc"
+    [ -n "$p_to" ]     && printf 'motion_timeout = %s\n' "$p_to"
+    [ -n "$p_mode" ]   && printf 'mode = %s\n' "$(tomlstr "$p_mode")"
+  fi
 done

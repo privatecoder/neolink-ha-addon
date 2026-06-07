@@ -9,7 +9,7 @@ fail=0
 for dir in "$here"/cases/*/; do
   name="$(basename "$dir")"
   if [[ "$name" == fail-* ]]; then
-    if out="$("$gen" < "$dir/options.json" 2>/dev/null)"; then
+    if "$gen" < "$dir/options.json" >/dev/null 2>&1; then
       echo "FAIL $name: expected non-zero exit"; fail=1
     else
       echo "ok   $name (rejected as expected)"
