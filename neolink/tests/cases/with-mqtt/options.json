@@ -1,0 +1,1 @@
+{ "mqtt_resolved": { "enabled": true, "broker": "core-mosquitto", "port": 1883, "username": "addons", "password": "secret" } }

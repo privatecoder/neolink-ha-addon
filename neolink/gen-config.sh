@@ -28,3 +28,15 @@ for ((i=0; i<n_users; i++)); do
   printf 'name = %s\n' "$(tomlstr "$uname")"
   printf 'pass = %s\n' "$(tomlstr "$upass")"
 done
+
+# --- MQTT broker (resolved upstream into .mqtt_resolved) ---
+if [ "$(jqr '.mqtt_resolved.enabled // false')" = "true" ]; then
+  printf '\n[mqtt]\n'
+  printf 'broker_addr = %s\n' "$(tomlstr "$(jqr '.mqtt_resolved.broker')")"
+  printf 'port = %s\n' "$(jqr '.mqtt_resolved.port')"
+  muser="$(jqr '.mqtt_resolved.username // empty')"
+  if [ -n "$muser" ]; then
+    mpass="$(jqr '.mqtt_resolved.password // ""')"
+    printf 'credentials = [%s, %s]\n' "$(tomlstr "$muser")" "$(tomlstr "$mpass")"
+  fi
+fi
