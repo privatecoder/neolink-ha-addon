@@ -22,10 +22,10 @@ opts="$(bashio::addon.config)"
 mqtt_enabled="$(bashio::config 'mqtt.enabled')"
 mqtt_resolved='{"enabled":false}'
 if [ "$mqtt_enabled" = "true" ]; then
-  broker="$(bashio::config 'mqtt.broker_override')"
-  port="$(bashio::config 'mqtt.port_override')"
-  user="$(bashio::config 'mqtt.username_override')"
-  pass="$(bashio::config 'mqtt.password_override')"
+  broker="$(bashio::config 'mqtt.broker_override')"; [ "$broker" = "null" ] && broker=""
+  port="$(bashio::config 'mqtt.port_override')";     [ "$port" = "null" ] && port=""
+  user="$(bashio::config 'mqtt.username_override')";  [ "$user" = "null" ] && user=""
+  pass="$(bashio::config 'mqtt.password_override')";  [ "$pass" = "null" ] && pass=""
   if [ -z "$broker" ] || [ "$broker" = "null" ]; then
     if bashio::services.available 'mqtt'; then
       broker="$(bashio::services 'mqtt' 'host')"
