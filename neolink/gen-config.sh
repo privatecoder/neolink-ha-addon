@@ -5,6 +5,10 @@ set -euo pipefail
 
 OPTS="$(cat)"
 
+# Fail closed: reject empty or malformed stdin. jq failures inside command
+# substitutions are not caught by `set -e`, so guard the input up front.
+jq -e . >/dev/null 2>&1 <<<"$OPTS" || { echo "gen-config: stdin is not valid JSON" >&2; exit 1; }
+
 # jq helpers bound to the input document
 jqr() { jq -r "$1" <<<"$OPTS"; }   # raw scalar
 # Encode an arbitrary string as a TOML basic string. JSON string escaping is a
@@ -46,7 +50,10 @@ n_cams="$(jqr '(.cameras // []) | length')"
 for ((i=0; i<n_cams; i++)); do
   cam="$(jq -c ".cameras[$i]" <<<"$OPTS")"
   cj() { jq -r "$1" <<<"$cam"; }          # raw from camera
-  cname="$(cj '.name')"
+  cname="$(cj '.name // empty')"
+  { [ -z "$cname" ] || [ "$cname" = "null" ]; } && { echo "Camera entry is missing a name" >&2; exit 1; }
+  uname="$(cj '.username // empty')"
+  { [ -z "$uname" ] || [ "$uname" = "null" ]; } && { echo "Camera '$cname': missing a username" >&2; exit 1; }
   uid="$(cj '.uid // empty')"
   addr="$(cj '.address // empty')"
   if [ -n "$uid" ] && [ -n "$addr" ]; then
