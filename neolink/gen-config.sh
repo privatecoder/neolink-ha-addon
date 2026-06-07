@@ -93,4 +93,26 @@ for ((i=0; i<n_cams; i++)); do
   for k in strict update_time use_splash debug enabled; do
     v="$(aj "$k")"; [ -n "$v" ] && printf '%s = %s\n' "$k" "$v"
   done
+
+  # [cameras.mqtt] — per-camera enable toggles + update intervals
+  mqtt_bools=(enable_motion enable_light enable_battery enable_preview enable_floodlight)
+  mqtt_ints=(battery_update preview_update floodlight_update)
+  mqtt_lines=""
+  for k in "${mqtt_bools[@]}"; do
+    v="$(aj "$k")"; [ -n "$v" ] && mqtt_lines+="$k = $v"$'\n'
+  done
+  for k in "${mqtt_ints[@]}"; do
+    v="$(aj "$k")"; [ -n "$v" ] && mqtt_lines+="$k = $v"$'\n'
+  done
+  if [ -n "$mqtt_lines" ]; then
+    printf '\n[cameras.mqtt]\n%s' "$mqtt_lines"
+  fi
+
+  # [cameras.mqtt.discovery] — only when MQTT discovery is enabled and features set
+  feats="$(jq -c '.mqtt_discovery_features // []' <<<"$cam")"
+  if [ "$(jqr '.mqtt_resolved.discovery // false')" = "true" ] && [ "$(jq 'length' <<<"$feats")" -gt 0 ]; then
+    printf '\n[cameras.mqtt.discovery]\n'
+    printf 'topic = %s\n' "$(tomlstr "$(jqr '.mqtt_resolved.discovery_topic // "homeassistant"')")"
+    printf 'features = %s\n' "$feats"
+  fi
 done

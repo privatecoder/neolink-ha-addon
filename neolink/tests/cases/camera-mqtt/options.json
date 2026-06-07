@@ -1,0 +1,4 @@
+{ "mqtt_resolved": { "enabled": true, "broker": "b", "port": 1883, "discovery": true, "discovery_topic": "homeassistant" },
+  "cameras": [ { "name": "Cam", "username": "admin", "uid": "X",
+    "mqtt_discovery_features": ["motion","battery"],
+    "advanced": { "enable_preview": false, "battery_update": 5000 } } ] }
