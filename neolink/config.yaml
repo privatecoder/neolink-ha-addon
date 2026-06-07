@@ -1,0 +1,86 @@
+name: Neolink
+slug: neolink
+version: "0.7.0"
+description: Bridge Reolink Baichuan (P2P) cameras to RTSP + MQTT, configured from the UI.
+url: https://github.com/privatecoder/neolink-ha-addon
+arch:
+  - amd64
+  - aarch64
+init: false
+startup: application
+boot: auto
+host_network: true
+services:
+  - mqtt:want
+map:
+  - ssl:ro
+options:
+  log_level: info
+  bind: "0.0.0.0"
+  bind_port: 8554
+  mqtt:
+    enabled: true
+    discovery: true
+    discovery_topic: homeassistant
+  cameras:
+    - name: Camera01
+      username: admin
+      password: ""
+      uid: ""
+schema:
+  log_level: list(trace|debug|info|warn|error)
+  bind: str
+  bind_port: port
+  certificate: str?
+  tls_client_auth: list(none|request|require)?
+  rtsp_users:
+    - name: str
+      pass: password
+  mqtt:
+    enabled: bool
+    discovery: bool
+    discovery_topic: str
+    broker_override: str?
+    port_override: port?
+    username_override: str?
+    password_override: password?
+  cameras:
+    - name: str
+      username: str
+      password: password?
+      uid: str?
+      address: str?
+      channel_id: int(0,31)?
+      stream: list(Main|Sub|Both|All|Extern|None)?
+      discovery: list(local|remote|map|relay|cellular|debug)?
+      relay_server_region: str?
+      connect_mode: list(always|on_demand)?
+      permitted_users:
+        - str?
+      mqtt_discovery_features:
+        - list(floodlight|camera|motion|led|ir|reboot|pt|battery|siren)?
+      advanced:
+        enabled: bool?
+        idle_timeout_secs: int(0,86400)?
+        relay_warm_seconds: int(0,3600)?
+        udp_gap_skip_ms: int(0,5000)?
+        buffer_duration: int(1,15000)?
+        max_encryption: list(none|bcencrypt|aes)?
+        strict: bool?
+        update_time: bool?
+        max_discovery_retries: int?
+        use_splash: bool?
+        splash_pattern: str?
+        debug: bool?
+        enable_motion: bool?
+        enable_light: bool?
+        enable_battery: bool?
+        enable_preview: bool?
+        enable_floodlight: bool?
+        battery_update: int(500,)?
+        preview_update: int(500,)?
+        floodlight_update: int(500,)?
+        pause_on_motion: bool?
+        pause_on_disconnect: bool?
+        pause_motion_timeout: float?
+        pause_mode: list(black|still|test|none)?
