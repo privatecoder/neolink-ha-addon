@@ -1,0 +1,27 @@
+configuration:
+  log_level:
+    name: Log level
+    description: Verbosity of the add-on log.
+  bind:
+    name: Bind address
+    description: Interface the RTSP server binds to (0.0.0.0 = all).
+  bind_port:
+    name: RTSP port
+    description: Port for the RTSP server (default 8554).
+  certificate:
+    name: TLS certificate
+    description: Path to a PEM (cert + key) to enable rtsps://. Optional.
+  tls_client_auth:
+    name: TLS client auth
+    description: Require a client certificate (none / request / require).
+  rtsp_users:
+    name: RTSP users
+    description: Username/password accounts for RTSP. Empty = anonymous.
+  mqtt:
+    name: MQTT
+    description: MQTT integration. Leave overrides empty to use the HA broker.
+  cameras:
+    name: Cameras
+    description: One entry per camera. Use uid (P2P) or address (ip:9000).
+network:
+  8554/tcp: RTSP server
