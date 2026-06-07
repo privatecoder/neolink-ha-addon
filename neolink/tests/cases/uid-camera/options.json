@@ -1,0 +1,3 @@
+{ "cameras": [ { "name": "Front Door", "username": "admin", "password": "pw", "uid": "ABCDEF0123456789",
+  "stream": "Both", "discovery": "relay", "connect_mode": "on_demand", "relay_server_region": "Europe (France)",
+  "permitted_users": ["me"], "advanced": { "idle_timeout_secs": 0, "buffer_duration": 3000, "max_encryption": "aes", "debug": false } } ] }

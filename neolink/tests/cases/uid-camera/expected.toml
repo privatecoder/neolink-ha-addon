@@ -1,0 +1,18 @@
+bind = "0.0.0.0"
+bind_port = 8554
+
+[[cameras]]
+name = "Front Door"
+username = "admin"
+password = "pw"
+uid = "ABCDEF0123456789"
+stream = "Both"
+discovery = "relay"
+connect_mode = "on_demand"
+relay_server_region = "Europe (France)"
+channel_id = 0
+permitted_users = ["me"]
+buffer_duration = 3000
+idle_timeout_secs = 0
+max_encryption = "aes"
+debug = false
