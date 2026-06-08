@@ -1,5 +1,10 @@
 # Changelog
 
+Version history for the **Neolink Home Assistant add-on**
+(`privatecoder/neolink-ha-addon`). The same notes are shown inside Home Assistant
+from [`neolink/CHANGELOG.md`](neolink/CHANGELOG.md). Each version notes which
+[`privatecoder/neolink`](https://github.com/privatecoder/neolink) image it wraps.
+
 ## 0.7.6
 
 - Wrap neolink **0.7.4** — the per-second RTSP heartbeat (`… HB elapsed=…`) is
@@ -8,7 +13,7 @@
   the 8558 default and the go2rtc conflict).
 - Docs: README now uses `homeassistant.local:8558`, and adds a "Viewing the
   cameras" section (WebRTC Camera + Advanced Camera Card, Generic Camera, and
-  go2rtc-stream options). Added a repository changelog and LICENSE.
+  go2rtc-stream options). Added this repository changelog and a LICENSE.
 
 ## 0.7.5
 
