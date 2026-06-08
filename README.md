@@ -26,4 +26,8 @@ add-on options if you use an external one.
 ## RTSP
 
 The RTSP server is exposed on the host at the configured `bind_port` (default
-`8554`): `rtsp://<home-assistant-host>:8554/<camera-name>/main`.
+`8558`): `rtsp://<home-assistant-host>:8558/<camera-name>/main` (or `/sub` for
+the substream). Use the host's LAN IP rather than `homeassistant.local`.
+
+> The default is **8558**, not the usual RTSP `8554`, because Home Assistant's
+> built-in go2rtc already listens on `8554` — neolink can't bind it there.
