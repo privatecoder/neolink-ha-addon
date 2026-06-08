@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.5
+
+- **Default RTSP port changed `8554` → `8558`.** Home Assistant's built-in
+  go2rtc already listens on `8554`, so neolink couldn't bind it — the RTSP
+  server looked started but was unreachable, and cards got *"wrong response on
+  DESCRIBE"* from the go2rtc squatting the port. If you previously set `8554`
+  explicitly, change it (and your stream URLs) to `8558` or another free port.
+- Wrap neolink **0.7.3**, which now logs a clear error if the RTSP port is
+  already in use instead of silently serving nothing.
+
 ## 0.7.4
 
 - Wrap neolink **0.7.2** — a single lost UDP packet no longer drops the camera
