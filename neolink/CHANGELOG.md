@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.2
+
+- Add an empty `rtsp_users: []` default. HA add-on schema requires every
+  top-level key to be present unless it has a default or is an optional scalar;
+  the `rtsp_users` list had neither, so saving failed with "Missing option
+  'rtsp_users' in root". Still wraps neolink 0.7.0.
+
 ## 0.7.1
 
 - Flatten per-camera advanced options to direct optional fields. Home Assistant
