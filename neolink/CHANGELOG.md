@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.4
+
+- Wrap neolink **0.7.2** — a single lost UDP packet no longer drops the camera
+  connection (the BC control framing now resyncs instead of forcing a
+  reconnect + re-login every few minutes on high-bitrate remote streams), and
+  the "Europe (United Kingdom)" relay region now pins correctly.
+
 ## 0.7.3
 
 - Wrap neolink **0.7.1** (skips re-probing battery/floodlight on cameras that
