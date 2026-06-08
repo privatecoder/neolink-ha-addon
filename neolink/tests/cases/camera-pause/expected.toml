@@ -1,0 +1,14 @@
+bind = "0.0.0.0"
+bind_port = 8554
+
+[[cameras]]
+name = "Cam"
+username = "admin"
+uid = "X"
+channel_id = 0
+
+[cameras.pause]
+on_motion = true
+on_disconnect = true
+motion_timeout = 2.5
+mode = "still"

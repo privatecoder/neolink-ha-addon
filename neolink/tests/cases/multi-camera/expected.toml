@@ -1,0 +1,16 @@
+bind = "0.0.0.0"
+bind_port = 8554
+
+[[cameras]]
+name = "Front Door"
+username = "admin"
+password = "pw1"
+uid = "ABCDEF0123456789"
+channel_id = 0
+
+[[cameras]]
+name = "Shed"
+username = "operator"
+password = "pw2"
+address = "192.168.1.10:9000"
+channel_id = 0

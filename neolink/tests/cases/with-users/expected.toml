@@ -1,0 +1,10 @@
+bind = "0.0.0.0"
+bind_port = 8554
+
+[[users]]
+name = "me"
+pass = "mepass"
+
+[[users]]
+name = "guest"
+pass = "g\"p"

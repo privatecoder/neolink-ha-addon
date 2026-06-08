@@ -1,0 +1,2 @@
+{ "cameras": [ { "name": "Cam", "username": "admin", "uid": "X",
+  "pause_on_motion": true, "pause_on_disconnect": true, "pause_motion_timeout": 2.5, "pause_mode": "still" } ] }

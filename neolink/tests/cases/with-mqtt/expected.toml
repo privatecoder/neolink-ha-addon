@@ -1,0 +1,7 @@
+bind = "0.0.0.0"
+bind_port = 8554
+
+[mqtt]
+broker_addr = "core-mosquitto"
+port = 1883
+credentials = ["addons", "secret"]
