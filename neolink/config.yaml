@@ -1,6 +1,6 @@
 name: Neolink
 slug: neolink
-version: "0.7.2"
+version: "0.7.3"
 description: Bridge Reolink Baichuan (P2P) cameras to RTSP + MQTT, configured from the UI.
 url: https://github.com/privatecoder/neolink-ha-addon
 arch:
@@ -50,7 +50,7 @@ schema:
       channel_id: int(0,31)?
       stream: list(Main|Sub|Both|All|Extern|None)?
       discovery: list(local|remote|map|relay|cellular|debug)?
-      relay_server_region: str?
+      relay_server_region: list(North America (East US)|North America (West US)|Europe (Germany)|Europe (France)|Europe (United Kingdom)|Asia (Hong Kong)|Middle East)?
       connect_mode: list(always|on_demand)?
       permitted_users:
         - str?

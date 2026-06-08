@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.3
+
+- Wrap neolink **0.7.1** (skips re-probing battery/floodlight on cameras that
+  lack them — no more repeated `Task Error` lines for non-battery cameras).
+- `relay_server_region` is now a **dropdown** of the known Reolink relay regions
+  instead of a free-text field. (UK pinning uses the corrected
+  "Europe (United Kingdom)" spelling; with an older wrapped neolink image it
+  falls back to trying all relay servers, which still connects.)
+
 ## 0.7.2
 
 - Add an empty `rtsp_users: []` default. HA add-on schema requires every
