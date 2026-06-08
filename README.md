@@ -83,10 +83,10 @@ cameras:
   - camera_entity: camera.rgm203_entrada
 ```
 
-### 3. Add the stream to go2rtc, then use it in Advanced Camera Card
+### 3. Register the stream in go2rtc (optional)
 
-If you run go2rtc (the **go2rtc add-on**, or the instance bundled with the WebRTC
-Camera integration), register the neolink stream once in its `go2rtc.yaml`:
+You can have go2rtc own the streams (handy for re-use across cards/integrations,
+recording, transcoding). Add them once to its `go2rtc.yaml`:
 
 ```yaml
 streams:
@@ -94,19 +94,30 @@ streams:
   rgm203-ascensor: rtsp://homeassistant.local:8558/rgm203-ascensor/main
 ```
 
-Then reference it by name with the card's `go2rtc` provider (point `url` at your
-go2rtc API, default `:1984`):
+go2rtc pulls these server-side (it can reach `homeassistant.local:8558` fine).
+The catch is how the **card** reaches go2rtc:
 
-```yaml
-type: custom:advanced-camera-card
-cameras:
-  - live_provider: go2rtc
-    go2rtc:
-      url: http://homeassistant.local:1984/
-      stream: rgm203-entrada
-    id: rgm203-entrada
-    title: Entrada
-```
+- **Home Assistant's built-in go2rtc** binds its API to **`127.0.0.1:1984`**
+  (loopback). The card's `live_provider: go2rtc` connects to that API *from your
+  browser*, so `url: http://homeassistant.local:1984/` is **unreachable** and the
+  card shows nothing (no error). **Do not use the `go2rtc` provider with the
+  built-in go2rtc.** Instead, reference the stream by **name** through the WebRTC
+  Camera integration's proxy:
 
-This is handy when you want one go2rtc instance to own all streams (re-used by
-multiple cards/integrations, recording, WebRTC/MSE transcoding, etc.).
+  ```yaml
+  type: custom:advanced-camera-card
+  cameras:
+    - live_provider: webrtc-card
+      webrtc_card:
+        url: rgm203-entrada          # go2rtc stream name (not an rtsp:// URL)
+      id: rgm203-entrada
+      title: Entrada
+  ```
+
+- The direct `live_provider: go2rtc` provider only works against a go2rtc whose
+  **API is reachable from the browser** — e.g. a standalone **go2rtc add-on** with
+  its API exposed on the host. With HA's built-in go2rtc it won't.
+
+For most setups the simplest path remains method 1 (direct RTSP via
+`webrtc-card`) — the go2rtc indirection is only worth it if you specifically want
+a single go2rtc to own all streams.
