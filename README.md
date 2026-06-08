@@ -14,7 +14,8 @@ all configured from the Home Assistant UI.
 
 Each camera needs a `name`, `username`, `password`, and **either** a `uid`
 (P2P/relay — for battery/remote cameras) **or** an `address` (`ip:9000` on your
-LAN). Advanced per-camera options live under the `advanced` section.
+LAN). Advanced per-camera options are optional fields, hidden behind the camera's
+"Show unused optional configuration options" toggle until you need them.
 
 ## MQTT
 

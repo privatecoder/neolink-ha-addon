@@ -55,28 +55,27 @@ schema:
         - str?
       mqtt_discovery_features:
         - list(floodlight|camera|motion|led|ir|reboot|pt|battery|siren)?
-      advanced:
-        enabled: bool?
-        idle_timeout_secs: int(0,86400)?
-        relay_warm_seconds: int(0,3600)?
-        udp_gap_skip_ms: int(0,5000)?
-        buffer_duration: int(1,15000)?
-        max_encryption: list(none|bcencrypt|aes)?
-        strict: bool?
-        update_time: bool?
-        max_discovery_retries: int?
-        use_splash: bool?
-        splash_pattern: str?
-        debug: bool?
-        enable_motion: bool?
-        enable_light: bool?
-        enable_battery: bool?
-        enable_preview: bool?
-        enable_floodlight: bool?
-        battery_update: int(500,)?
-        preview_update: int(500,)?
-        floodlight_update: int(500,)?
-        pause_on_motion: bool?
-        pause_on_disconnect: bool?
-        pause_motion_timeout: float?
-        pause_mode: list(black|still|test|none)?
+      enabled: bool?
+      idle_timeout_secs: int(0,86400)?
+      relay_warm_seconds: int(0,3600)?
+      udp_gap_skip_ms: int(0,5000)?
+      buffer_duration: int(1,15000)?
+      max_encryption: list(none|bcencrypt|aes)?
+      strict: bool?
+      update_time: bool?
+      max_discovery_retries: int?
+      use_splash: bool?
+      splash_pattern: str?
+      debug: bool?
+      enable_motion: bool?
+      enable_light: bool?
+      enable_battery: bool?
+      enable_preview: bool?
+      enable_floodlight: bool?
+      battery_update: int(500,)?
+      preview_update: int(500,)?
+      floodlight_update: int(500,)?
+      pause_on_motion: bool?
+      pause_on_disconnect: bool?
+      pause_motion_timeout: float?
+      pause_mode: list(black|still|test|none)?

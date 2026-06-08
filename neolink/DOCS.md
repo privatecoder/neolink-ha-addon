@@ -15,8 +15,9 @@ Bridges Reolink Baichuan/P2P cameras to RTSP + MQTT.
   - `uid` (P2P/relay) **or** `address` (`ip:9000`) — exactly one
   - `stream`, `discovery`, `connect_mode`, `relay_server_region`,
     `permitted_users`, `mqtt_discovery_features`
-  - `advanced` — timeouts, buffer, encryption, splash, per-camera MQTT toggles,
-    pause behaviour.
+  - optional advanced fields (timeouts, buffer, encryption, splash, per-camera
+    MQTT toggles, pause behaviour) — hidden under the camera's *"Show unused
+    optional configuration options"* toggle until you need them.
 
 ## Notes
 

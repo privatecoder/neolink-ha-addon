@@ -84,7 +84,9 @@ for ((i=0; i<n_cams; i++)); do
     printf 'permitted_users = %s\n' "$(jq -c '.permitted_users' <<<"$cam")"
   fi
 
-  adv="$(jq -c '.advanced // {}' <<<"$cam")"
+  # Advanced/optional fields are direct camera fields (HA add-on schema cannot
+  # mark a nested dict optional, so they are not nested under `advanced`).
+  adv="$cam"
   # Presence-based read: distinguishes an absent key from a present boolean
   # `false` (jq's `// empty` would drop a literal false, so we use `has`).
   aj() { jq -r --arg k "$1" 'if has($k) then .[$k] else empty end' <<<"$adv"; }
