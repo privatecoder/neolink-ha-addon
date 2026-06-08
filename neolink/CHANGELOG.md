@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.6
+
+- Wrap neolink **0.7.4** — the per-second RTSP heartbeat (`… HB elapsed=…`) is
+  now a debug log, so the add-on's `info` log is no longer flooded.
+- Fix the `RTSP port` field help text (it still said "default 8554"; now reflects
+  the 8558 default and the go2rtc conflict).
+
 ## 0.7.5
 
 - **Default RTSP port changed `8554` → `8558`.** Home Assistant's built-in

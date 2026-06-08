@@ -7,7 +7,7 @@ configuration:
     description: Interface the RTSP server binds to (0.0.0.0 = all).
   bind_port:
     name: RTSP port
-    description: Port for the RTSP server (default 8554).
+    description: Port for the RTSP server (default 8558; avoid 8554 — used by HA's built-in go2rtc).
   certificate:
     name: TLS certificate
     description: Path to a PEM (cert + key) to enable rtsps://. Optional.
