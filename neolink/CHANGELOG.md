@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.7
+
+- Wrap neolink **0.7.5** — fixes a connection-loss bug that pinned a CPU core at
+  ~100% and wedged the runtime. The symptom was the add-on sitting at ~99% CPU
+  with its log going silent right after `Connection Lost … Attempt reconnect`:
+  the camera never reconnected and RTSP clients connected but got no stream until
+  a restart. Camera disconnects now tear down cleanly and reconnect on their own.
+  No config changes required.
+
 ## 0.7.6
 
 - Wrap neolink **0.7.4** — the per-second RTSP heartbeat (`… HB elapsed=…`) is
