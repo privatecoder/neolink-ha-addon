@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.8
+
+- Wrap neolink **0.7.6** — fixes the high-CPU / no-reconnect bug for real. After a
+  camera dropped, the add-on could sit at ~99% (or higher) CPU with its log going
+  silent right after `Connection Lost … Attempt reconnect`: the camera never
+  reconnected and streams stayed dead until a restart. Root cause was the MQTT
+  client busy-spinning internally on a half-open broker connection (rumqttc's
+  pending-request replay had a zero throttle), which pegged the CPU and starved
+  the runtime so the camera-reconnect task never ran. Verified by reproduction:
+  the same camera-reboot stress that used to wedge it now stays at ~1–2% CPU and
+  reconnects cleanly. (The 0.7.7 bcconn/motion fixes were real but addressed
+  different latent loops, not this one.) No config changes required.
+
 ## 0.7.7
 
 - Wrap neolink **0.7.5** — fixes a connection-loss bug that pinned a CPU core at
