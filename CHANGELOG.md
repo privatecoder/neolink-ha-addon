@@ -5,6 +5,16 @@ Version history for the **Neolink Home Assistant add-on**
 from [`neolink/CHANGELOG.md`](neolink/CHANGELOG.md). Each version notes which
 [`privatecoder/neolink`](https://github.com/privatecoder/neolink) image it wraps.
 
+## 0.7.9
+
+- Wrap neolink **0.7.7** — the *real* fix for the high-CPU / no-reconnect-after-a-drop
+  bug. 0.7.8 (neolink 0.7.6) only covered one of the MQTT client's internal
+  busy-loop paths, so after several hours the add-on could peg the CPU and go
+  silent again right after `Connection Lost … Attempt reconnect`. 0.7.7 caps the
+  MQTT poll loop's iteration rate, which structurally bounds the CPU no matter
+  which internal path spins (and logs a warning if it ever engages). No config
+  changes required.
+
 ## 0.7.8
 
 - Wrap neolink **0.7.6** — fixes the high-CPU / no-reconnect bug for real. After a
