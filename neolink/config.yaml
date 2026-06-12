@@ -1,6 +1,6 @@
 name: Neolink
 slug: neolink
-version: "0.7.9"
+version: "0.7.10"
 description: Bridge Reolink Baichuan (P2P) cameras to RTSP + MQTT, configured from the UI.
 url: https://github.com/privatecoder/neolink-ha-addon
 arch:

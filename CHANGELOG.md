@@ -5,6 +5,14 @@ Version history for the **Neolink Home Assistant add-on**
 from [`neolink/CHANGELOG.md`](neolink/CHANGELOG.md). Each version notes which
 [`privatecoder/neolink`](https://github.com/privatecoder/neolink) image it wraps.
 
+## 0.7.10
+
+- Temporary test build for soak-testing the MQTT CPU-spin fix. Wraps neolink
+  `0.7.5-rc2`, which adds a 5s backoff to the per-camera MQTT handler restart so a
+  camera disconnect can no longer drive the MQTT event loop into a CPU spin, and
+  preserves the retain flag when re-queuing a failed publish. Intended to be
+  replaced by a stable release once verified.
+
 ## 0.7.9
 
 - Wrap neolink **0.7.7** — the *real* fix for the high-CPU / no-reconnect-after-a-drop
