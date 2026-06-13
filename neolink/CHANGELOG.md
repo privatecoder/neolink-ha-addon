@@ -1,12 +1,18 @@
 # Changelog
 
-## 0.7.10
+## 0.7.7-rc1
 
-- Temporary test build for soak-testing the MQTT CPU-spin fix. Wraps neolink
-  `0.7.5-rc2`, which adds a 5s backoff to the per-camera MQTT handler restart so a
-  camera disconnect can no longer drive the MQTT event loop into a CPU spin, and
-  preserves the retain flag when re-queuing a failed publish. Intended to be
-  replaced by a stable release once verified.
+- Release candidate wrapping neolink `0.7.5-rc3`. Carries the MQTT CPU-spin work
+  (a 5s backoff on the per-camera handler restart so a camera disconnect can no
+  longer drive the MQTT event loop into a CPU spin, plus retain-flag preservation
+  when re-queuing a failed publish) together with a round of RTSP and core
+  hardening: the stream-setup phase is now bounded by a timeout and is
+  cancellation-aware, so a slow or offline camera can no longer hold a GStreamer
+  worker thread; stream generations own and tear down their per-client tasks and
+  RTSP mounts on reconfiguration; appsrc pushes use typed outcomes; BC framing
+  resync and AAC/ADPCM frame parsing are bounded against malformed input; and the
+  build moves to Rust edition 2021. Intended for verification before a stable
+  release.
 
 ## 0.7.9
 
