@@ -19,38 +19,6 @@ from [`neolink/CHANGELOG.md`](neolink/CHANGELOG.md). Each version notes which
   build moves to Rust edition 2021. Intended for verification before a stable
   release.
 
-## 0.7.9
-
-- Wrap neolink **0.7.7** — the *real* fix for the high-CPU / no-reconnect-after-a-drop
-  bug. 0.7.8 (neolink 0.7.6) only covered one of the MQTT client's internal
-  busy-loop paths, so after several hours the add-on could peg the CPU and go
-  silent again right after `Connection Lost … Attempt reconnect`. 0.7.7 caps the
-  MQTT poll loop's iteration rate, which structurally bounds the CPU no matter
-  which internal path spins (and logs a warning if it ever engages). No config
-  changes required.
-
-## 0.7.8
-
-- Wrap neolink **0.7.6** — fixes the high-CPU / no-reconnect bug for real. After a
-  camera dropped, the add-on could sit at ~99% (or higher) CPU with its log going
-  silent right after `Connection Lost … Attempt reconnect`: the camera never
-  reconnected and streams stayed dead until a restart. Root cause was the MQTT
-  client busy-spinning internally on a half-open broker connection (rumqttc's
-  pending-request replay had a zero throttle), which pegged the CPU and starved
-  the runtime so the camera-reconnect task never ran. Verified by reproduction:
-  the same camera-reboot stress that used to wedge it now stays at ~1–2% CPU and
-  reconnects cleanly. (The 0.7.7 bcconn/motion fixes were real but addressed
-  different latent loops, not this one.) No config changes required.
-
-## 0.7.7
-
-- Wrap neolink **0.7.5** — fixes a connection-loss bug that pinned a CPU core at
-  ~100% and wedged the runtime. The symptom was the add-on sitting at ~99% CPU
-  with its log going silent right after `Connection Lost … Attempt reconnect`:
-  the camera never reconnected and RTSP clients connected but got no stream until
-  a restart. Camera disconnects now tear down cleanly and reconnect on their own.
-  No config changes required.
-
 ## 0.7.6
 
 - Wrap neolink **0.7.4** — the per-second RTSP heartbeat (`… HB elapsed=…`) is
