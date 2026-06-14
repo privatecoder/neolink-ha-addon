@@ -1,30 +1,31 @@
 # Changelog
 
-## 0.7.7-rc2
+## 0.7.7
 
-- Release candidate wrapping neolink `0.7.5-rc4`. Reworks the RTSP setup path so a
-  stream whose codec is already known (cached from a previous view) is served to the
-  client immediately, with the camera connection happening in the background. A
-  client opening a camera that is briefly offline now gets a valid session right
-  away and the video appears on its own once the camera (re)connects — no client
-  reconnect. The setup-failure path was also tidied: an offline/timed-out camera is
-  reported as a clean "unavailable" result instead of a misleading error, and a
-  per-client setup no longer briefly serializes other clients of the same stream.
-  Carries everything from rc1. Intended for verification before a stable release.
+Wraps neolink **0.7.5**. The headline is the fix for the high-CPU / no-reconnect
+bug after a camera drop, plus a round of RTSP and core hardening. Changes since
+0.7.6 (which wrapped neolink 0.7.4):
 
-## 0.7.7-rc1
+- **High CPU / no-reconnect after a camera drops, fixed.** The add-on could peg the
+  CPU and go silent right after `Connection Lost … Attempt reconnect`, with the
+  camera never coming back until a restart. The cause was the per-camera MQTT
+  handler restarting in a tight loop with no backoff, flooding the broker and
+  spinning the MQTT client until the runtime starved. The handler now backs off
+  before restarting, a spinning connection is dropped and reconnected, and a
+  poll-rate cap acts as a failsafe.
+- **Snappier, more robust live view.** Once a stream's codec has been seen, opening
+  it again builds and serves the pipeline immediately while the camera connects in
+  the background, and a brief camera drop resumes into the same session without the
+  card reconnecting. RTSP client setup is time-bounded and self-cleaning, so a slow
+  or offline camera can no longer stall the server or leave stale mounts.
+- **Hardened against malformed camera data** — bounded protocol resync and stricter
+  audio-frame parsing, plus recovery of dropped packets at stream start.
+- **Build** — wraps neolink built on Rust edition 2021, with a reproducible Docker
+  base.
+- **Docs** — added a Home Assistant integration guide (go2rtc / WebRTC / MSE / HLS,
+  H264/H265 + AAC, and the camera-side I-frame-interval and CBR/VBR trade-offs).
 
-- Release candidate wrapping neolink `0.7.5-rc3`. Carries the MQTT CPU-spin work
-  (a 5s backoff on the per-camera handler restart so a camera disconnect can no
-  longer drive the MQTT event loop into a CPU spin, plus retain-flag preservation
-  when re-queuing a failed publish) together with a round of RTSP and core
-  hardening: the stream-setup phase is now bounded by a timeout and is
-  cancellation-aware, so a slow or offline camera can no longer hold a GStreamer
-  worker thread; stream generations own and tear down their per-client tasks and
-  RTSP mounts on reconfiguration; appsrc pushes use typed outcomes; BC framing
-  resync and AAC/ADPCM frame parsing are bounded against malformed input; and the
-  build moves to Rust edition 2021. Intended for verification before a stable
-  release.
+No add-on configuration changes are required.
 
 ## 0.7.6
 
