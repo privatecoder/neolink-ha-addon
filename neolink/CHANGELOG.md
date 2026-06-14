@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.8-rc1
+
+- Release candidate wrapping neolink `0.7.6-rc1`. Adds a keepalive so that opening a
+  camera that is currently offline keeps the live view's session alive: a low-rate
+  placeholder image is sent until the camera (re)connects, at which point the real
+  video appears on its own — without closing and reopening the card. The placeholder
+  is generated once per camera resolution and matches it exactly, so the switch to
+  live video is seamless. If it can't be generated, the stream simply falls back to
+  the previous behaviour. Intended for verification before a stable release.
+
 ## 0.7.7
 
 Wraps neolink **0.7.5**. The headline is the fix for the high-CPU / no-reconnect
