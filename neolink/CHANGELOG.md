@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.7.7-rc2
+
+- Release candidate wrapping neolink `0.7.5-rc4`. Reworks the RTSP setup path so a
+  stream whose codec is already known (cached from a previous view) is served to the
+  client immediately, with the camera connection happening in the background. A
+  client opening a camera that is briefly offline now gets a valid session right
+  away and the video appears on its own once the camera (re)connects — no client
+  reconnect. The setup-failure path was also tidied: an offline/timed-out camera is
+  reported as a clean "unavailable" result instead of a misleading error, and a
+  per-client setup no longer briefly serializes other clients of the same stream.
+  Carries everything from rc1. Intended for verification before a stable release.
+
 ## 0.7.7-rc1
 
 - Release candidate wrapping neolink `0.7.5-rc3`. Carries the MQTT CPU-spin work
