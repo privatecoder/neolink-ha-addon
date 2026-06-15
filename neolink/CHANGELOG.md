@@ -1,11 +1,12 @@
 # Changelog
 
-## 0.7.8-rc2
+## 0.7.8-rc3
 
-- Diagnostic release candidate wrapping neolink `0.7.6-rc2`. Raises the offline
-  keepalive rate to ~10 fps (a 1 fps placeholder can be treated as a stalled stream)
-  and adds logging of the keepalive push outcomes, to pin down why a viewer can still
-  drop the session during a long outage. Same behaviour as rc1 otherwise.
+- Diagnostic release candidate wrapping neolink `0.7.6-rc3`. Raises the offline
+  keepalive to a true ~10 fps (rc2 was effectively ~5 fps due to a receive-timeout
+  cap, and its placeholder clock ran at half speed) and logs the keepalive push
+  outcomes, to pin down why a viewer can still drop the session during a long outage.
+  Otherwise unchanged.
 
 ## 0.7.8-rc1
 
