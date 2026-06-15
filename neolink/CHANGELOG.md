@@ -1,12 +1,14 @@
 # Changelog
 
-## 0.7.8-rc4
+## 0.7.8-rc5
 
-- Diagnostic release candidate wrapping neolink `0.7.6-rc4`. Fixes a bug where the
-  offline keepalive froze after ~64 frames: it pushed through a finite, blocking
-  buffer pool, so once a stalled viewer stopped consuming, the keepalive blocked
-  waiting for a free buffer. Placeholder frames now use a plain allocation that can't
-  block. Re-test of the offline-at-connect recovery; supersedes rc3.
+- Release candidate wrapping neolink `0.7.6-rc5`. Adds **silent audio** to the offline
+  keepalive: the previous builds kept the *video* alive while a camera was offline, but
+  the viewer (go2rtc) still dropped the session after ~20 s because the negotiated audio
+  track produced no data. The placeholder now also emits silent audio matched to the
+  camera's format, so the session stays alive until the camera returns and live video
+  resumes on its own. Supersedes rc4. This is expected to be the build that holds a card
+  open through a long outage — please test the offline-at-connect scenario.
 
 ## 0.7.8-rc1
 
