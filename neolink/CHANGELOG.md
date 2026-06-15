@@ -1,12 +1,12 @@
 # Changelog
 
-## 0.7.8-rc3
+## 0.7.8-rc4
 
-- Diagnostic release candidate wrapping neolink `0.7.6-rc3`. Raises the offline
-  keepalive to a true ~10 fps (rc2 was effectively ~5 fps due to a receive-timeout
-  cap, and its placeholder clock ran at half speed) and logs the keepalive push
-  outcomes, to pin down why a viewer can still drop the session during a long outage.
-  Otherwise unchanged.
+- Diagnostic release candidate wrapping neolink `0.7.6-rc4`. Fixes a bug where the
+  offline keepalive froze after ~64 frames: it pushed through a finite, blocking
+  buffer pool, so once a stalled viewer stopped consuming, the keepalive blocked
+  waiting for a free buffer. Placeholder frames now use a plain allocation that can't
+  block. Re-test of the offline-at-connect recovery; supersedes rc3.
 
 ## 0.7.8-rc1
 
