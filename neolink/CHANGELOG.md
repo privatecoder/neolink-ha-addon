@@ -1,24 +1,20 @@
 # Changelog
 
-## 0.7.8-rc5
+## 0.7.8
 
-- Release candidate wrapping neolink `0.7.6-rc5`. Adds **silent audio** to the offline
-  keepalive: the previous builds kept the *video* alive while a camera was offline, but
-  the viewer (go2rtc) still dropped the session after ~20 s because the negotiated audio
-  track produced no data. The placeholder now also emits silent audio matched to the
-  camera's format, so the session stays alive until the camera returns and live video
-  resumes on its own. Supersedes rc4. This is expected to be the build that holds a card
-  open through a long outage — please test the offline-at-connect scenario.
+Wraps neolink **0.7.6**. Builds on 0.7.7 with offline-recovery for the live view.
 
-## 0.7.8-rc1
+- **The live view survives a camera reboot, and opens even while the camera is
+  offline.** Opening a camera that's offline — or rebooting a camera while its card is
+  open — no longer fails or times out. The add-on shows a brief black placeholder, and
+  once the camera is back the live picture returns **on its own, without closing and
+  reopening the card**. It does this by holding the stream open with a low-rate
+  placeholder (a black image plus matching silent audio) until real frames arrive.
+- One thing to know: the **first** time you open a camera after the add-on (re)starts,
+  the camera must be online so its stream format can be learned and cached; after that,
+  offline opens and reboots recover automatically.
 
-- Release candidate wrapping neolink `0.7.6-rc1`. Adds a keepalive so that opening a
-  camera that is currently offline keeps the live view's session alive: a low-rate
-  placeholder image is sent until the camera (re)connects, at which point the real
-  video appears on its own — without closing and reopening the card. The placeholder
-  is generated once per camera resolution and matches it exactly, so the switch to
-  live video is seamless. If it can't be generated, the stream simply falls back to
-  the previous behaviour. Intended for verification before a stable release.
+No add-on configuration changes are required.
 
 ## 0.7.7
 
