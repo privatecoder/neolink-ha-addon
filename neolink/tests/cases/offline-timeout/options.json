@@ -1,0 +1,9 @@
+{
+  "bind": "0.0.0.0",
+  "bind_port": 8558,
+  "offline_timeout_secs": 300,
+  "cameras": [
+    { "name": "Door", "username": "admin", "uid": "ABC", "offline_timeout_secs": 600 },
+    { "name": "Yard", "username": "admin", "uid": "DEF" }
+  ]
+}

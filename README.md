@@ -132,3 +132,10 @@ close and reopen the card. The placeholder is held for as long as the card stays
 open, so always-on wall dashboards ride through arbitrarily long reboots and recover
 automatically. (The one caveat: the **first** time you open a camera after the add-on
 restarts, the camera must be online so its format can be learned and cached.)
+
+If you'd rather a long outage **end** the stream — so Home Assistant marks the camera
+unavailable and can alert you — instead of holding the placeholder forever, set
+**Offline timeout (seconds)** (`offline_timeout_secs`), either globally in the add-on
+options or per camera. `0` (the default) holds the placeholder indefinitely; any other
+value must exceed your camera's reboot time (a 60s floor is enforced). It's per-viewer:
+the shared camera connection keeps reconnecting for any other open cards.
