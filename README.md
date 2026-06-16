@@ -62,9 +62,9 @@ type: custom:advanced-camera-card
 cameras:
   - live_provider: webrtc-card
     webrtc_card:
-      url: rtsp://homeassistant.local:8558/rgm203-entrada/main
-    id: rgm203-entrada
-    title: Entrada
+      url: rtsp://homeassistant.local:8558/front-door/main
+    id: front-door
+    title: Front Door
 ```
 
 ### 2. Generic Camera integration (creates a `camera.*` entity)
@@ -80,7 +80,7 @@ Advanced Camera Card via `camera_entity:`, etc.):
 ```yaml
 type: custom:advanced-camera-card
 cameras:
-  - camera_entity: camera.rgm203_entrada
+  - camera_entity: camera.front_door
 ```
 
 ### 3. Register the stream in go2rtc (optional)
@@ -90,8 +90,8 @@ recording, transcoding). Add them once to its `go2rtc.yaml`:
 
 ```yaml
 streams:
-  rgm203-entrada: rtsp://homeassistant.local:8558/rgm203-entrada/main
-  rgm203-ascensor: rtsp://homeassistant.local:8558/rgm203-ascensor/main
+  front-door: rtsp://homeassistant.local:8558/front-door/main
+  driveway: rtsp://homeassistant.local:8558/driveway/main
 ```
 
 go2rtc pulls these server-side (it can reach `homeassistant.local:8558` fine).
@@ -109,9 +109,9 @@ The catch is how the **card** reaches go2rtc:
   cameras:
     - live_provider: webrtc-card
       webrtc_card:
-        url: rgm203-entrada          # go2rtc stream name (not an rtsp:// URL)
-      id: rgm203-entrada
-      title: Entrada
+        url: front-door          # go2rtc stream name (not an rtsp:// URL)
+      id: front-door
+      title: Front Door
   ```
 
 - The direct `live_provider: go2rtc` provider only works against a go2rtc whose
@@ -121,3 +121,14 @@ The catch is how the **card** reaches go2rtc:
 For most setups the simplest path remains method 1 (direct RTSP via
 `webrtc-card`) — the go2rtc indirection is only worth it if you specifically want
 a single go2rtc to own all streams.
+
+### Offline cameras and reboots
+
+You don't need to do anything special for outages. Once a camera has been viewed
+once (so its stream format is cached), opening it while it's **offline** — or
+rebooting it while a card is open — shows a brief **black placeholder** and then
+returns to the live picture **on its own once the camera is back**, with no need to
+close and reopen the card. The placeholder is held for as long as the card stays
+open, so always-on wall dashboards ride through arbitrarily long reboots and recover
+automatically. (The one caveat: the **first** time you open a camera after the add-on
+restarts, the camera must be online so its format can be learned and cached.)
