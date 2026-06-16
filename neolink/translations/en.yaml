@@ -8,6 +8,15 @@ configuration:
   bind_port:
     name: RTSP port
     description: Port for the RTSP server (default 8558; avoid 8554 — used by HA's built-in go2rtc).
+  offline_timeout_secs:
+    name: Offline timeout (seconds)
+    description: >-
+      Global default: how long a viewer keeps seeing the black + silent-audio
+      placeholder while a camera is offline before that viewer's stream is dropped
+      (so Home Assistant can mark it unavailable / trigger automations). 0 = never
+      (default — the placeholder is held indefinitely and recovers on its own when
+      the camera returns). Must exceed your camera's reboot time; values 1-59 are
+      raised to a 60s floor. Override per camera under a camera's optional settings.
   certificate:
     name: TLS certificate
     description: Path to a PEM (cert + key) to enable rtsps://. Optional.

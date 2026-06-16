@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.7.9
+
+Wraps neolink **0.7.7**. Adds an **optional offline timeout** for the live view.
+
+- By default nothing changes: when a camera is offline the placeholder is held
+  indefinitely and the view recovers on its own when the camera returns.
+- New **Offline timeout (seconds)** option (`offline_timeout_secs`) lets you instead
+  have a viewer's stream **end** after N seconds offline — so Home Assistant marks the
+  camera unavailable and can alert you — rather than holding the placeholder forever.
+  Set it globally in the add-on options, or per camera (a camera's value overrides the
+  global; unset inherits it). `0` = never (default); any value must exceed your
+  camera's reboot time (a 60 s floor is enforced). It's per-viewer — the shared camera
+  connection keeps reconnecting for any other open cards.
+
+No add-on configuration changes are required to keep today's behaviour.
+
 ## 0.7.8
 
 Wraps neolink **0.7.6**. Builds on 0.7.7 with offline-recovery for the live view.

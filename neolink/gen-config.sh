@@ -18,6 +18,9 @@ tomlstr() { jq -rn --arg v "$1" '$v | tojson'; }
 # --- Server (top-level) ---
 printf 'bind = %s\n' "$(tomlstr "$(jqr '.bind // "0.0.0.0"')")"
 printf 'bind_port = %s\n' "$(jqr '.bind_port // 8558')"
+# Global offline-timeout default (0 = never). Always emitted; per-camera entries
+# below override it only when set.
+printf 'offline_timeout_secs = %s\n' "$(jqr '.offline_timeout_secs // 0')"
 cert="$(jqr '.certificate // empty')"
 [ -n "$cert" ] && printf 'certificate = %s\n' "$(tomlstr "$cert")"
 tca="$(jqr '.tls_client_auth // empty')"
@@ -91,7 +94,7 @@ for ((i=0; i<n_cams; i++)); do
   # `false` (jq's `// empty` would drop a literal false, so we use `has`).
   aj() { jq -r --arg k "$1" 'if has($k) then .[$k] else empty end' <<<"$adv"; }
   # numeric advanced scalars (emitted unquoted)
-  for k in buffer_duration idle_timeout_secs relay_warm_seconds udp_gap_skip_ms max_discovery_retries; do
+  for k in buffer_duration idle_timeout_secs offline_timeout_secs relay_warm_seconds udp_gap_skip_ms max_discovery_retries; do
     v="$(aj "$k")"; [ -n "$v" ] && printf '%s = %s\n' "$k" "$v"
   done
   # string advanced scalars
