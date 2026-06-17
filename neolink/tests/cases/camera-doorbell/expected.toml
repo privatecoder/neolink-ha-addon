@@ -1,0 +1,20 @@
+bind = "0.0.0.0"
+bind_port = 8558
+offline_timeout_secs = 0
+
+[mqtt]
+broker_addr = "b"
+port = 1883
+
+[[cameras]]
+name = "Cam"
+username = "admin"
+uid = "X"
+channel_id = 0
+
+[cameras.mqtt]
+enable_doorbell = true
+
+[cameras.mqtt.discovery]
+topic = "homeassistant"
+features = ["doorbell"]

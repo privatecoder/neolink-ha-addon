@@ -112,7 +112,7 @@ for ((i=0; i<n_cams; i++)); do
   done
 
   # [cameras.mqtt] — per-camera enable toggles + update intervals
-  mqtt_bools=(enable_motion enable_light enable_battery enable_preview enable_floodlight)
+  mqtt_bools=(enable_motion enable_light enable_battery enable_preview enable_floodlight enable_doorbell)
   mqtt_ints=(battery_update preview_update floodlight_update)
   mqtt_lines=""
   for k in "${mqtt_bools[@]}"; do
