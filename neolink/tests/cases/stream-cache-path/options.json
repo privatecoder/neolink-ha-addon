@@ -1,0 +1,1 @@
+{ "stream_cache_path": "/data/stream-cache.json", "cameras": [ { "name": "Shed", "username": "admin", "password": "pw", "uid": "ABCDEF0123456789" } ] }

@@ -18,6 +18,11 @@ Bridges Reolink Baichuan/P2P cameras to RTSP + MQTT.
   viewer so Home Assistant can mark the camera unavailable / trigger automations; it
   must exceed your camera's reboot time (values 1-59 are raised to a 60s floor).
   Override per camera via the camera's optional `offline_timeout_secs`.
+- **stream_cache_path** — where neolink persists the camera stream types it has
+  learned, so that after an add-on restart a known camera's "stream not ready"
+  placeholder can still be built before the camera is reachable. Defaults to
+  `/data/stream-cache.json` (the add-on's persistent volume); clear it to disable
+  persistence (in-memory only).
 - **certificate / tls_client_auth** — optional RTSP TLS (use `rtsps://`).
 - **rtsp_users** — RTSP login accounts; omit for anonymous access.
 - **mqtt** — `enabled`/`discovery`/`discovery_topic` and optional broker
