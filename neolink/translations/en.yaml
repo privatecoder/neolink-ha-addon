@@ -17,6 +17,13 @@ configuration:
       (default — the placeholder is held indefinitely and recovers on its own when
       the camera returns). Must exceed your camera's reboot time; values 1-59 are
       raised to a 60s floor. Override per camera under a camera's optional settings.
+  stream_cache_path:
+    name: Stream cache path
+    description: >-
+      Where to persist learned camera stream types so that, after a restart, a
+      known camera's "stream not ready" placeholder can still be built before the
+      camera is reachable. Defaults to the add-on's persistent /data volume.
+      Clear to disable persistence (in-memory only).
   certificate:
     name: TLS certificate
     description: Path to a PEM (cert + key) to enable rtsps://. Optional.

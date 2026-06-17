@@ -25,6 +25,11 @@ cert="$(jqr '.certificate // empty')"
 [ -n "$cert" ] && printf 'certificate = %s\n' "$(tomlstr "$cert")"
 tca="$(jqr '.tls_client_auth // empty')"
 [ -n "$tca" ] && printf 'tls_client_auth = %s\n' "$(tomlstr "$tca")"
+# Persist learned stream types so a known camera's offline placeholder still
+# builds after a restart. Defaults to the add-on's persistent /data volume; only
+# emitted when set (empty disables persistence).
+scp="$(jqr '.stream_cache_path // empty')"
+[ -n "$scp" ] && printf 'stream_cache_path = %s\n' "$(tomlstr "$scp")"
 
 # --- RTSP users ---
 n_users="$(jqr '(.rtsp_users // []) | length')"

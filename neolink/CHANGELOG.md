@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.7.10
+
+Wraps neolink **0.7.8**. Adds a **persistent stream-type cache** so a known
+camera's offline placeholder survives an add-on restart.
+
+- New **Stream cache path** option (`stream_cache_path`), defaulting to
+  `/data/stream-cache.json` (the add-on's persistent volume). Neolink learns each
+  camera's stream type on first connection and now persists it there, so after the
+  add-on restarts a card that opens while a known camera is still offline gets the
+  "stream not ready" placeholder immediately instead of nothing. Clear the option
+  to disable persistence (in-memory only).
+- Cached types are a hint, not the truth: on the first connection they are
+  reconciled against the live camera. If the codec or audio format changed while
+  the add-on was down, the cache is refreshed and the view reconnects to a correct
+  pipeline.
+- Also from neolink 0.7.8: a defensive fallback that serves the splash placeholder
+  (instead of failing with GStreamer errors) when a client connects before any
+  camera codec has been learned and the camera is unreachable.
+
+No add-on configuration changes are required to keep today's behaviour.
+
 ## 0.7.9
 
 Wraps neolink **0.7.7**. Adds an **optional offline timeout** for the live view.

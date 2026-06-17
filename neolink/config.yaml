@@ -1,6 +1,6 @@
 name: Neolink
 slug: neolink
-version: "0.7.9"
+version: "0.7.10"
 description: Bridge Reolink Baichuan (P2P) cameras to RTSP + MQTT, configured from the UI.
 url: https://github.com/privatecoder/neolink-ha-addon
 arch:
@@ -19,6 +19,7 @@ options:
   bind: "0.0.0.0"
   bind_port: 8558
   offline_timeout_secs: 0
+  stream_cache_path: "/data/stream-cache.json"
   rtsp_users: []
   mqtt:
     enabled: true
@@ -30,6 +31,7 @@ schema:
   bind: str
   bind_port: port
   offline_timeout_secs: int(0,86400)
+  stream_cache_path: str?
   certificate: str?
   tls_client_auth: list(none|request|require)?
   rtsp_users:
