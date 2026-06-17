@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.12
+
+Wraps neolink **0.7.10**. Adds doorbell (visitor) button-press detection over MQTT.
+
+- Cameras with a doorbell can now report each press to Home Assistant. Enable the
+  per-camera **enable_doorbell** option (off by default) and add **doorbell** to a
+  camera's MQTT discovery features. Each press is published as a discrete event to
+  `neolink/{camera}/status/doorbell` and exposed as a Home Assistant event entity
+  (`device_class` doorbell). Doorbell presses are reported separately from motion,
+  and cameras without a doorbell are unaffected.
+
+No add-on configuration changes are required to keep today's behaviour.
+
 ## 0.7.11
 
 Wraps neolink **0.7.9**. Stability fix that prevents live views from dropping after
