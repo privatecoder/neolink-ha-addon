@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.7.11
+
+Wraps neolink **0.7.9**. Stability fix that prevents live views from dropping after
+hours of continuous operation.
+
+- Under the hood, a single slow or stalled viewer (for example a card that stopped
+  keeping up with a high-bitrate camera) could block the camera's control channel,
+  which made the camera drop the session and forced a reconnect cycle for everyone.
+  Neolink now keeps that control channel responsive regardless of how any one viewer
+  is behaving, and an audio buffer that fills up no longer tears down the whole
+  stream. Long-running views stay up.
+
+No add-on configuration changes are required to keep today's behaviour.
+
 ## 0.7.10
 
 Wraps neolink **0.7.8**. Adds a **persistent stream-type cache** so a known
