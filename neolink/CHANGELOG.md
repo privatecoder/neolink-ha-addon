@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.13
+
+Wraps neolink **0.7.11**. Bug-fix release: fixes the truncated camera preview image
+and removes a stale MQTT topic.
+
+- The camera preview image (MQTT `status/preview`, shown by the Home Assistant camera
+  entity) is no longer cut off after the top portion. Neolink previously published a
+  snapshot even when part of it was lost in transit; it now retries the snapshot and
+  keeps the last good frame instead of publishing a truncated image.
+- The unused `status/notification` MQTT topic — a leftover from the push-notification
+  feature removed upstream — is cleared and no longer published. Nothing read it, so no
+  configuration changes are required.
+
 ## 0.7.12
 
 Wraps neolink **0.7.10**. Adds doorbell (visitor) button-press detection over MQTT.
