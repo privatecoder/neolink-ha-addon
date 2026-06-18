@@ -2,29 +2,24 @@
 
 ## 0.7.14
 
-Wraps neolink **0.7.12**. Bug-fix release: the camera preview image is no longer
-truncated.
+Wraps neolink **0.7.12**. Hardens camera snapshot reliability.
 
-- The camera preview image (MQTT `status/preview`, shown by the Home Assistant camera
-  entity) now shows the complete picture instead of just the top strip. Neolink now
-  requests the full frame from the camera and verifies the image is complete before
-  publishing it, so a partial picture is retried rather than shown. This completes the
-  preview fix started in 0.7.13.
+- Camera snapshots (the MQTT `status/preview` image behind the Home Assistant camera
+  entity) are validated as complete images before being published: an incomplete
+  capture is retried and the last good frame is kept rather than published.
 
 No add-on configuration changes are required to keep today's behaviour.
 
 ## 0.7.13
 
-Wraps neolink **0.7.11**. Bug-fix release: fixes the truncated camera preview image
-and removes a stale MQTT topic.
+Wraps neolink **0.7.11**. Removes a stale MQTT topic and adds snapshot completeness
+checking.
 
-- The camera preview image (MQTT `status/preview`, shown by the Home Assistant camera
-  entity) is no longer cut off after the top portion. Neolink previously published a
-  snapshot even when part of it was lost in transit; it now retries the snapshot and
-  keeps the last good frame instead of publishing a truncated image.
 - The unused `status/notification` MQTT topic — a leftover from the push-notification
   feature removed upstream — is cleared and no longer published. Nothing read it, so no
   configuration changes are required.
+- Camera snapshots gain a completeness check, so an incomplete capture is retried
+  rather than published.
 
 ## 0.7.12
 
