@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.14
+
+Wraps neolink **0.7.12**. Bug-fix release: the camera preview image is no longer
+truncated.
+
+- The camera preview image (MQTT `status/preview`, shown by the Home Assistant camera
+  entity) now shows the complete picture instead of just the top strip. Neolink now
+  requests the full frame from the camera and verifies the image is complete before
+  publishing it, so a partial picture is retried rather than shown. This completes the
+  preview fix started in 0.7.13.
+
+No add-on configuration changes are required to keep today's behaviour.
+
 ## 0.7.13
 
 Wraps neolink **0.7.11**. Bug-fix release: fixes the truncated camera preview image
