@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.7.15
+
+Wraps neolink **0.7.13**. Robustness fixes and internal cleanup.
+
+- More resilient camera discovery: a stray, unrelated network packet arriving during
+  peer-to-peer connection setup no longer aborts the connection attempt.
+- Two-way audio (talk) and a few command paths now report a clear error instead of
+  crashing the command on malformed input or an unusual camera response.
+
+No add-on configuration changes are required to keep today's behaviour.
+
 ## 0.7.14
 
 Wraps neolink **0.7.12**. Hardens camera snapshot reliability.
