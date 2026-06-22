@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.7.16
+
+Wraps neolink **0.7.14**. Security and robustness release.
+
+- Hardened against malformed camera/network data: a bad packet can no longer crash the add-on or cause runaway memory use.
+- Home Assistant fixes: command acknowledgements now use the correct MQTT topics; removing a camera now clears its Home Assistant entities (no more ghosts) and re-adding a removed camera works again; the floodlight switch reflects its real state.
+- More reliable connections: a camera that failed to log in now recovers after you correct its settings and reload, without restarting the add-on; live-view client cleanup is prompter.
+- Smaller fixes to the command-line tools (snapshots, PTZ, ports) and an internal cleanup pass.
+
+No add-on configuration changes are required to keep today's behaviour.
+
 ## 0.7.15
 
 Wraps neolink **0.7.13**. Robustness fixes and internal cleanup.
