@@ -126,9 +126,9 @@ a single go2rtc to own all streams.
 
 You don't need to do anything special for outages. Once a camera has been viewed
 once (so its stream format is cached), opening it while it's **offline** — or
-rebooting it while a card is open — shows a brief **black placeholder** and then
-returns to the live picture **on its own once the camera is back**, with no need to
-close and reopen the card. The placeholder is held for as long as the card stays
+rebooting it while a card is open — shows a brief **placeholder** (a still of the
+camera's last frame) and then returns to the live picture **on its own once the camera
+is back**, with no need to close and reopen the card. The placeholder is held for as long as the card stays
 open, so always-on wall dashboards ride through arbitrarily long reboots and recover
 automatically. (The one caveat: the **first** time you open a camera after the add-on
 restarts, the camera must be online so its format can be learned and cached.)

@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.7.17
+
+Wraps neolink **0.7.15**. Fixes Home Assistant live view dropping into a reconnect loop.
+
+- Some cameras' live view would connect and then immediately drop, retrying every few
+  seconds and never showing video — most noticeable after a camera briefly fell behind or
+  reconnected. While a camera was connecting, Neolink filled the gap with a placeholder
+  frame whose video parameters didn't match the camera, so Home Assistant's player
+  (go2rtc) rejected the real stream the moment it took over. Neolink now reuses the
+  camera's own most recent frame for that placeholder, so the live picture takes over
+  cleanly and the stream stays up.
+- Live view also recovers faster when a camera momentarily falls behind: the stream now
+  catches up to the latest frames instead of staying stuck replaying a backlog.
+
+No add-on configuration changes are required to keep today's behaviour.
+
 ## 0.7.16
 
 Wraps neolink **0.7.14**. Security and robustness release.
