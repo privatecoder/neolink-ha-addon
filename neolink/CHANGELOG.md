@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.7.18
+
+Wraps neolink **0.7.16**. Fixes the live-view reconnect loop that could appear after the add-on restarts.
+
+- After the add-on (re)starts, a camera takes a couple of seconds to connect (peer-to-peer). If you opened a card in that window, the add-on used to answer immediately with a "connecting" placeholder — but Home Assistant's player (go2rtc) gives up on a placeholder-only stream within a fraction of a second and then retries in a tight loop that doesn't recover on its own. That's why a stream sometimes "stopped working" until you restarted again. The add-on now briefly waits for the camera's first real frame before answering (up to 5 s by default), so the player gets real video straight away and the stream holds.
+- The first time you open each camera after a restart now shows a brief "connecting" (usually 2–3 s) instead of an instant placeholder — in exchange for the live view actually staying up. Every later open is instant as before.
+- New optional tuning: **Startup keyframe wait (seconds)** (`startup_keyframe_wait_secs`, default 5, set `0` to disable), global or per camera.
+- If your live view still flaps, also give go2rtc a single **named stream** to own (see the README) rather than a raw `rtsp://` URL per card — that stops go2rtc's own retry storm.
+
+No add-on configuration changes are required to keep today's behaviour.
+
 ## 0.7.17
 
 Wraps neolink **0.7.15**. Fixes Home Assistant live view dropping into a reconnect loop.

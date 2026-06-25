@@ -139,3 +139,31 @@ unavailable and can alert you — instead of holding the placeholder forever, se
 options or per camera. `0` (the default) holds the placeholder indefinitely; any other
 value must exceed your camera's reboot time (a 60s floor is enforced). It's per-viewer:
 the shared camera connection keeps reconnecting for any other open cards.
+
+### Live view connects then drops in a loop
+
+**Symptom:** a camera's live view won't hold — it connects and drops within a second,
+keeps retrying, and the card shows nothing. It often appears right **after the add-on
+restarts**, and a second restart sometimes "fixes" it.
+
+**Why:** a Reolink camera takes ~2–3 seconds to connect peer-to-peer after the add-on
+starts. If you open a card in that window, the stream isn't producing real frames yet,
+so the add-on fills the gap with a "connecting" placeholder — but Home Assistant's
+player (go2rtc) gives up on a placeholder-only stream within a fraction of a second and
+falls into a fast reconnect loop that doesn't recover on its own. When the camera
+happens to be ready in time, the same stream plays fine for hours — which is why it
+looks random.
+
+**Fix (do both):**
+
+1. **Already handled by the add-on (0.7.18+).** It now briefly waits for the camera's
+   first real frame before answering, so go2rtc gets real video immediately. You can tune
+   or disable this with **Startup keyframe wait (seconds)** (`startup_keyframe_wait_secs`,
+   default 5; `0` = off), globally or per camera. The trade-off is a brief "connecting"
+   (usually 2–3 s) on the first open of each camera after a restart.
+2. **Give go2rtc one stream to own.** If you point each card at a raw
+   `rtsp://…:8558/…` URL, every card opens its own impatient connection with no backoff.
+   Instead register each camera **once** as a named go2rtc stream and reference it by
+   name — see [Register the stream in go2rtc](#3-register-the-stream-in-go2rtc-optional).
+   That gives go2rtc a single, well-behaved producer per camera and stops the retry
+   storm.

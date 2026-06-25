@@ -1,0 +1,9 @@
+{
+  "bind": "0.0.0.0",
+  "bind_port": 8558,
+  "startup_keyframe_wait_secs": 3,
+  "cameras": [
+    { "name": "Door", "username": "admin", "uid": "ABC", "startup_keyframe_wait_secs": 0 },
+    { "name": "Yard", "username": "admin", "uid": "DEF" }
+  ]
+}
