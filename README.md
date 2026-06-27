@@ -35,8 +35,9 @@ The RTSP server is exposed on the host at the configured `bind_port` (default
 `8558`):
 
 ```
-rtsp://homeassistant.local:8558/<camera-name>/main     # full quality
-rtsp://homeassistant.local:8558/<camera-name>/sub      # lighter substream
+rtsp://homeassistant.local:8558/<camera-name>/main           # full quality (often H.265)
+rtsp://homeassistant.local:8558/<camera-name>/externStream   # "Balanced": H.264, mid-res
+rtsp://homeassistant.local:8558/<camera-name>/sub            # lighter substream (H.264)
 ```
 
 > The default is **8558**, not the usual RTSP `8554`, because Home Assistant's
@@ -45,6 +46,15 @@ rtsp://homeassistant.local:8558/<camera-name>/sub      # lighter substream
 > `homeassistant.local` is the simplest host reference and works for consumers
 > running inside Home Assistant. If your network can't resolve it, use the Home
 > Assistant host's LAN IP instead (e.g. `rtsp://192.168.1.50:8558/...`).
+
+> **Tip — the "Balanced" (extern) stream is often the best WebRTC source.** Reolink
+> cameras encode a *third* stream that the app exposes only as its **"Balanced"** live
+> quality, never in Stream settings. It's **H.264 like the sub stream but at a higher
+> resolution and bitrate** (e.g. 896×512 vs sub's 640×360). Since browsers play H.264
+> over WebRTC everywhere — while the H.265 main usually can't render over WebRTC outside
+> Safari — the extern stream often gives the best WebRTC picture, sharper than sub. Set
+> the camera's `stream` option to `Extern` (or `All`) and use `/<camera-name>/externStream`.
+> Not all camera models serve it; on those it falls back to the sub stream.
 
 ## Viewing the cameras
 
