@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.20
+
+Wraps neolink **0.7.18**. Fixes a dashboard where **several camera cards all fail to load at the same time**.
+
+- When a dashboard opened several camera streams at the exact same moment (e.g. multiple cards on one view), they could all get stuck with no video — each connected, then received nothing and timed out. The add-on now handles simultaneous stream starts concurrently, so they all come up. Opening cameras one at a time was never affected.
+- The third ("Balanced" / extern) stream now reports its correct resolution, frame rate and bitrate — including on camera units that don't advertise it in their config (the add-on reads it from the video itself, the way the official Reolink app does). It's the H.264 "Balanced" live quality, reachable at `…/<camera-name>/externStream` (set the camera's **Stream** option to `Extern` or `All`).
+
+No add-on configuration changes are required.
+
 ## 0.7.19
 
 Wraps neolink **0.7.17**. Makes each camera's reported frame rate, bitrate and resolution match its actual current settings.
