@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.19
+
+Wraps neolink **0.7.17**. Makes each camera's reported frame rate, bitrate and resolution match its actual current settings.
+
+- The add-on used to read these from a camera "capability" list whose frame rate and bitrate are *factory defaults* that don't follow what you've actually configured — so a sub stream set to 15 fps could be cached as 10, and a main stream could report the wrong bitrate or resolution. It now reads the camera's current encoder settings directly, so the values are correct.
+- This is an internal accuracy fix: your live video always played at the true rate; only the reported/cached metadata was off. If a camera was cached with a wrong value by an earlier version, it corrects itself the first time you open that camera after updating.
+
+No add-on configuration changes are required.
+
 ## 0.7.18
 
 Wraps neolink **0.7.16**. Fixes the live-view reconnect loop that could appear after the add-on restarts.
