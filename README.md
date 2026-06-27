@@ -47,14 +47,20 @@ rtsp://homeassistant.local:8558/<camera-name>/sub            # lighter substream
 > running inside Home Assistant. If your network can't resolve it, use the Home
 > Assistant host's LAN IP instead (e.g. `rtsp://192.168.1.50:8558/...`).
 
-> **Tip — the "Balanced" (extern) stream is often the best WebRTC source.** Reolink
-> cameras encode a *third* stream that the app exposes only as its **"Balanced"** live
-> quality, never in Stream settings. It's **H.264 like the sub stream but at a higher
-> resolution and bitrate** (e.g. 896×512 vs sub's 640×360). Since browsers play H.264
-> over WebRTC everywhere — while the H.265 main usually can't render over WebRTC outside
-> Safari — the extern stream often gives the best WebRTC picture, sharper than sub. Set
-> the camera's `stream` option to `Extern` (or `All`) and use `/<camera-name>/externStream`.
-> Not all camera models serve it; on those it falls back to the sub stream.
+> **Tip — the third ("extern") stream is often the best WebRTC source.** Beyond main and
+> sub, Reolink cameras expose a third stream slot. On most **single-lens** cameras it's
+> the app's **"Balanced"** live quality: **H.264 like the sub stream but at a higher
+> resolution and bitrate** (e.g. 896×512 vs sub's 640×360). You can pick it in live view
+> (the Clear / Balanced / Fluent switch), but its encoder config never appears in the
+> app's Stream settings — which only show main and sub, so it's easy to miss. Since
+> browsers play H.264 over WebRTC everywhere — while the
+> H.265 main usually can't outside Safari — that often makes it the best WebRTC picture,
+> sharper than sub. Set the camera's `stream` option to `Extern` (or `All`) and use
+> `/<camera-name>/externStream`.
+>
+> The slot's content is **model-dependent**, so check what your camera actually delivers:
+> on **dual-lens / tracking / telephoto** models it's the **second lens**, not a balanced
+> stream, and some models don't serve it at all (it falls back to the sub stream).
 
 ## Viewing the cameras
 
