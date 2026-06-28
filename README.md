@@ -67,6 +67,26 @@ rtsp://homeassistant.local:8558/<camera-name>/sub            # lighter substream
 The add-on only produces RTSP streams; turning those into something you can put
 on a dashboard is a one-time setup per camera. Three common ways, simplest first:
 
+### Codecs & browsers — what plays where
+
+The add-on passes the camera's **video** through untouched (main = H.265/HEVC,
+sub/extern = H.264) and **decodes the audio to uncompressed L16 PCM — it never serves
+AAC.** Which transport your card uses decides what actually renders in the browser:
+
+| Transport | H.264 video | H.265 video | Audio (L16 PCM) |
+|---|---|---|---|
+| **WebRTC** | ✅ everywhere | ⚠️ Safari/Apple only (Chrome HEVC over WebRTC is very limited) | ✅ go2rtc converts PCM → Opus/PCMA (no ffmpeg) |
+| **MSE** | ✅ | ✅ in Chromium/Edge | ✅ |
+| **HLS** (HA `stream`) | ✅ | ✅ | ✅ |
+| **MJPEG** | re-encoded | — | ❌ no audio (CPU-heavy fallback) |
+
+- **H.265 main over WebRTC fails outside Safari** → cards fall back to MSE (Chromium
+  plays H.265 there). For reliable WebRTC, use an **H.264** stream: the **sub**, or the
+  sharper **"Balanced" / extern** stream (see the tip above).
+- **Audio works over WebRTC** — there's no AAC to worry about. The add-on serves L16 PCM,
+  which go2rtc converts to Opus/PCMA. (L16 is uncompressed — heavier than AAC, but it's
+  add-on → go2rtc on the LAN, so a non-issue.)
+
 ### 1. WebRTC Camera integration + Advanced Camera Card (direct, no entity)
 
 Install the **WebRTC Camera** integration (HACS) and the **Advanced Camera Card**
